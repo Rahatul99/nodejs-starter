@@ -9,19 +9,30 @@ const app = {};
 
 //testing file system
 // TODO
-data.create(
-  "test",
-  "newFile",
-  { name: "Bangladesh", language: "Bangla" },
-  (err) => {
-    console.log(`error was`, err);
-  }
-);
 
+//create
+// data.create(
+//   "test",
+//   "newFile",
+//   { name: "Bangladesh", language: "Bangla" },
+//   (err) => {
+//     console.log(`error was`, err);
+//   }
+// );
+
+//read
 data.read("test", "newFile", (err, data) => {
   console.log(err, data);
 });
-
+//update
+data.update(
+  "test",
+  "newFile",
+  { name: "England", language: "English" },
+  (err) => {
+    console.log(err);
+  }
+);
 //configuration
 app.config = {
   port: 3000,
