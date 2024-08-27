@@ -18,6 +18,10 @@ data.create(
   }
 );
 
+data.read("test", "newFile", (err, data) => {
+  console.log(err, data);
+});
+
 //configuration
 app.config = {
   port: 3000,
