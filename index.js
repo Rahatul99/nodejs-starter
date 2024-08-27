@@ -33,6 +33,11 @@ data.update(
     console.log(err);
   }
 );
+//delete
+data.delete("test", "newFile", (err) => {
+  console.log(err);
+});
+
 //configuration
 app.config = {
   port: 3000,
