@@ -10,7 +10,7 @@ const app = {};
 //testing file system
 // TODO
 
-//create
+//create;
 // data.create(
 //   "test",
 //   "newFile",
@@ -24,7 +24,7 @@ const app = {};
 // data.read("test", "newFile", (err, data) => {
 //   console.log(err, data);
 // });
-//update
+//update;
 // data.update(
 //   "test",
 //   "newFile",

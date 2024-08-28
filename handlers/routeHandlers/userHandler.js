@@ -1,5 +1,6 @@
 //dependencies
 const data = require("../../lib/data");
+const { hash } = require("../../helpers/utilities");
 
 const handler = {};
 
@@ -47,13 +48,25 @@ handler._users.post = (requestProperties, callback) => {
 
   if (firstName && lastName && phone && tosAgreement) {
     //make sure that the user doesn't already exist
-    data.read("users", phone, (err, user) => {
-      if (err) {
+    data.read("users", phone, (err1, user) => {
+      if (err1) {
         let userObject = {
           firstName,
           lastName,
           phone,
+          password: hash(password),
+          tosAgreement,
         };
+        //user is ready to store to db
+        data.create("users", phone, userObject, (err2) => {
+          if (!err2) {
+            callback(200, {
+              message: "User was created successfully",
+            });
+          } else {
+            callback(500, { error: "Could not create user" });
+          }
+        });
       } else {
         callback(500, {
           error: "There is user already exist",
