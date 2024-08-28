@@ -1,16 +1,18 @@
-const { StringDecoder } = require("string_decoder"); //stringDecoder is a class
+const { StringDecoder } = require("string_decoder");
 const url = require("url");
 const routes = require("../routes");
 const {
   notFoundHandler,
 } = require("../handlers/routeHandlers/notFoundHandler");
-//module scaffolding
+const { parseJSON } = require("../helpers/utilities");
+
+// Module scaffolding
 const handler = {};
 
-//handle request and response
+// Handle request and response
 handler.handleReqRes = (req, res) => {
-  //request handling
-  //get the url and parse it
+  // Request handling
+  // Get the URL and parse it
   const parsedUrl = url.parse(req.url, true);
   const path = parsedUrl.pathname;
   const trimmedPath = path.replace(/^\/*|\/*$/g, "");
@@ -41,17 +43,19 @@ handler.handleReqRes = (req, res) => {
   req.on("end", () => {
     realData += decoder.end();
 
+    requestProperties.body = parseJSON(realData);
+
     chosenHandler(requestProperties, (statusCode, payload) => {
       statusCode = typeof statusCode === "number" ? statusCode : 500;
       payload = typeof payload === "object" ? payload : {};
 
       const payloadString = JSON.stringify(payload);
+
+      // Return the final result
+      res.setHeader("Content-Type", "application/json");
       res.writeHead(statusCode);
       res.end(payloadString);
     });
-
-    //response handle
-    res.end("Hello world");
   });
 };
 
